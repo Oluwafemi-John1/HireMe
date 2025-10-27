@@ -13,6 +13,10 @@
         }
     }
 
+    // Receive from frontend
+    $input = file_get_contents('php://input');
+    $customerDetails = json_decode($input); // COnverts the details into what PHP understands
+
     $auth = new Auth;
-    $auth->createCustomer('Femi', 'John', 'fm@gmail.com', '123456')
+    $auth->createCustomer('Femi', 'John', 'fm2@gmail.com', '123456')
 ?>
