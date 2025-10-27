@@ -7,8 +7,11 @@
         protected $database = 'hire_me';
         protected $connection;
 
-        protected function __construct() {
+        public function __construct() {
             $this->connection = mysqli_connect($this->host, $this->username, $this->password, $this->database);
+            print_r($this->connection);
         }
     }
+
+    $newConfig = new Config;
 ?>
