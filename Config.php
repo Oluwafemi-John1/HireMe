@@ -9,7 +9,7 @@
 
         public function __construct() {
             $this->connection = mysqli_connect($this->host, $this->username, $this->password, $this->database);
-            print_r($this->connection);
+            // print_r($this->connection);
         }
     }
 
