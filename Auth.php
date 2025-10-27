@@ -16,7 +16,12 @@
     // Receive from frontend
     $input = file_get_contents('php://input');
     $customerDetails = json_decode($input); // COnverts the details into what PHP understands
+    $first_name = $customerDetails->first_name;
+    $last_name = $customerDetails->last_name;
+    $email = $customerDetails->email;
+    $password = $customerDetails->password;
 
     $auth = new Auth;
-    $auth->createCustomer('Femi', 'John', 'fm2@gmail.com', '123456')
+    $auth->createCustomer($first_name, $last_name, $email, $password)
+    // $auth->createCustomer('Femi', 'John', 'fm2@gmail.com', '123456')
 ?>
