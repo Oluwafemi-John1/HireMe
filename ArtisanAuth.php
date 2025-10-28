@@ -5,10 +5,9 @@
             $query = "INSERT INTO `artisan_tb`(`first_name`, `last_name`, `email`, `password`) VALUES('$first_name', '$last_name', '$email', '$password')";
             $saveArtisan = mysqli_query($this->connection, $query);
             if($saveArtisan) {
-                echo 'artisan sign up successful';
-                // return ;
+                echo json_encode(['status' => 200, 'message' => 'artisan sign up successful']);
             } else {
-                echo 'artisan creation failed';
+                echo json_encode(['status' => 500, 'message' => 'artisan sign up failed']);
             }
         }
     }
