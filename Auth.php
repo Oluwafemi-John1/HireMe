@@ -2,13 +2,20 @@
     require('Config.php');
     class Auth extends Config {
         public function createCustomer($first_name, $last_name, $email, $password) {
-            $query = "INSERT INTO `customer_tb`(`first_name`, `last_name`, `email`, `password`) VALUES('$first_name', '$last_name', '$email', '$password')";
-            $saveCustomer = mysqli_query($this->connection, $query);
-            if($saveCustomer) {
-                echo json_encode(['status' => 200, 'message' => 'customer sign up successful']);
-                // return ;
+            $confirmQuery = "SELECT * FROM customer_tb WHERE email='$email'";
+            $result = mysqli_query($this->connection, $confirmQuery);
+            print_r($result);
+            if(mysqli_num_rows($result) > 0) {
+                echo json_encode(['status' => 400, 'message' => 'Account already exist']);
             } else {
-                echo json_encode(['status' => 500, 'message' => 'customer creation failed']);
+                $query = "INSERT INTO `customer_tb`(`first_name`, `last_name`, `email`, `password`) VALUES('$first_name', '$last_name', '$email', '$password')";
+                $saveCustomer = mysqli_query($this->connection, $query);
+                if($saveCustomer) {
+                    echo json_encode(['status' => 200, 'message' => 'customer sign up successful']);
+                    // return ;
+                } else {
+                    echo json_encode(['status' => 500, 'message' => 'customer creation failed']);
+                }
             }
         }
     }
@@ -23,5 +30,5 @@
 
     $auth = new Auth;
     $auth->createCustomer($first_name, $last_name, $email, $password)
-    // $auth->createCustomer('Femi', 'John', 'fm2@gmail.com', '123456')
+    // $auth->createCustomer('Femi', 'John', 'fm@gmail.com', '123456')
 ?>
