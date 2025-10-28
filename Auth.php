@@ -4,7 +4,7 @@
         public function createCustomer($first_name, $last_name, $email, $password) {
             $confirmQuery = "SELECT * FROM customer_tb WHERE email='$email'";
             $result = mysqli_query($this->connection, $confirmQuery);
-            print_r($result);
+            // print_r($result);
             if(mysqli_num_rows($result) > 0) {
                 echo json_encode(['status' => 400, 'message' => 'Account already exist']);
             } else {
