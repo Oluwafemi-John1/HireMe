@@ -40,5 +40,10 @@ $email = $artisanDetails->email;
 $password = $artisanDetails->password;
 
 $auth = new ArtisanAuth;
-$auth->createArtisan($first_name, $last_name, $email, $password);
+if ($first_name && $last_name) {
+        $auth->createArtisan($first_name, $last_name, $email, $password);
+    } else {
+        $auth->loginArtisan($email, $password);
+    }
 // $auth->createArtisan('Femi', 'John', 'fm222@gmail.com', '123456');
+$auth->loginArtisan('fm222@gmail.com', '123456');
