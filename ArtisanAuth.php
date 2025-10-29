@@ -29,17 +29,17 @@ class ArtisanAuth extends Config
         $foundUser = mysqli_fetch_assoc($result);
         // print_r($foundUser);
 
-        if(mysqli_num_rows($result) > 0) {
-                $verifiedUser = password_verify($password, $foundUser['password']);
-                // echo $verifiedUser;
-                if ($verifiedUser) {
-                    echo json_encode(['status' => 200, 'message' => 'Login successful']);
-                } else {
-                    echo json_encode(['status' => 400, 'message' => 'Email or password is incorrect']);
-                }
+        if (mysqli_num_rows($result) > 0) {
+            $verifiedUser = password_verify($password, $foundUser['password']);
+            // echo $verifiedUser;
+            if ($verifiedUser) {
+                echo json_encode(['status' => 200, 'message' => 'Login successful']);
             } else {
-                echo json_encode(['status' => 400, 'message' => 'account does not exist. Kindly sign up first']);
+                echo json_encode(['status' => 400, 'message' => 'Email or password is incorrect']);
             }
+        } else {
+            echo json_encode(['status' => 400, 'message' => 'account does not exist. Kindly sign up first']);
+        }
     }
 }
 
