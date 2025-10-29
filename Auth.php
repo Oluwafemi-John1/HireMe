@@ -2,13 +2,16 @@
     require('Config.php');
     class Auth extends Config {
         public function createCustomer($first_name, $last_name, $email, $password) {
+            // Hash password
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
             $confirmQuery = "SELECT * FROM customer_tb WHERE email='$email'";
             $result = mysqli_query($this->connection, $confirmQuery);
             // print_r($result);
             if(mysqli_num_rows($result) > 0) {
                 echo json_encode(['status' => 400, 'message' => 'Account already exist']);
             } else {
-                $query = "INSERT INTO `customer_tb`(`first_name`, `last_name`, `email`, `password`) VALUES('$first_name', '$last_name', '$email', '$password')";
+                $query = "INSERT INTO `customer_tb`(`first_name`, `last_name`, `email`, `password`) VALUES('$first_name', '$last_name', '$email', '$hashedPassword')";
                 $saveCustomer = mysqli_query($this->connection, $query);
                 if($saveCustomer) {
                     echo json_encode(['status' => 200, 'message' => 'customer sign up successful']);
