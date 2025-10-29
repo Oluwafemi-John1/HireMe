@@ -15,10 +15,28 @@
                 $saveCustomer = mysqli_query($this->connection, $query);
                 if($saveCustomer) {
                     echo json_encode(['status' => 200, 'message' => 'customer sign up successful']);
-                    // return ;
                 } else {
                     echo json_encode(['status' => 500, 'message' => 'customer creation failed']);
                 }
+            }
+        }
+
+        public function loginCustomer($email, $password) {
+            $query = "SELECT * FROM customer_tb WHERE email='$email'";
+            $result = mysqli_query($this->connection, $query);
+            $foundUser = mysqli_fetch_assoc($result);
+            // print_r($foundUser);
+
+            if(mysqli_num_rows($result) > 0) {
+                $verifiedUser = password_verify($password, $foundUser['password']);
+                // echo $verifiedUser;
+                if ($verifiedUser) {
+                    echo json_encode(['status' => 200, 'message' => 'Login successful']);
+                } else {
+                    echo json_encode(['status' => 400, 'message' => 'Email or password is incorrect']);
+                }
+            } else {
+                echo json_encode(['status' => 400, 'message' => 'account does not exist. Kindly sign up first']);
             }
         }
     }
@@ -32,6 +50,11 @@
     $password = $customerDetails->password;
 
     $auth = new Auth;
-    $auth->createCustomer($first_name, $last_name, $email, $password)
+    if ($first_name && $last_name) {
+        $auth->createCustomer($first_name, $last_name, $email, $password);
+    } else {
+        $auth->loginCustomer($email, $password);
+    }
     // $auth->createCustomer('Femi', 'John', 'fm@gmail.com', '123456')
+    // $auth->loginCustomer('roma@mailinator.com', 'Femi1234$')
 ?>
