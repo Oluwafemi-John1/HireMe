@@ -21,6 +21,10 @@ class ArtisanAuth extends Config
             }
         }
     }
+
+    public function loginArtisan($email, $password) {
+        
+    }
 }
 
 // Receive from frontend
