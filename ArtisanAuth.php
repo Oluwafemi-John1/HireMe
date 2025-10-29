@@ -4,13 +4,15 @@ class ArtisanAuth extends Config
 {
     public function createArtisan($first_name, $last_name, $email, $password)
     {
+        // Hash password
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
         $confirmQuery = "SELECT * FROM customer_tb WHERE email='$email'";
         $result = mysqli_query($this->connection, $confirmQuery);
 
         if (mysqli_num_rows($result) > 0) {
             echo json_encode(['status' => 400, 'message' => 'Account already exist']);
         } else {
-            $query = "INSERT INTO `artisan_tb`(`first_name`, `last_name`, `email`, `password`) VALUES('$first_name', '$last_name', '$email', '$password')";
+            $query = "INSERT INTO `artisan_tb`(`first_name`, `last_name`, `email`, `password`) VALUES('$first_name', '$last_name', '$email', '$hashedPassword')";
             $saveArtisan = mysqli_query($this->connection, $query);
             if ($saveArtisan) {
                 echo json_encode(['status' => 200, 'message' => 'artisan sign up successful']);
@@ -31,4 +33,4 @@ $password = $artisanDetails->password;
 
 $auth = new ArtisanAuth;
 $auth->createArtisan($first_name, $last_name, $email, $password);
-// $auth->createArtisan('Femi', 'John', 'fm2@gmail.com', '123456')
+// $auth->createArtisan('Femi', 'John', 'fm222@gmail.com', '123456');
