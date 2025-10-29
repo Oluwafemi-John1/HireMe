@@ -22,8 +22,12 @@ class ArtisanAuth extends Config
         }
     }
 
-    public function loginArtisan($email, $password) {
-        
+    public function loginArtisan($email, $password)
+    {
+        $query = "SELECT * FROM customer_tb WHERE email='$email'";
+        $result = mysqli_query($this->connection, $query);
+        $foundUser = mysqli_fetch_assoc($result);
+        // print_r($foundUser);
     }
 }
 
