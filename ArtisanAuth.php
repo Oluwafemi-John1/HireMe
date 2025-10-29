@@ -24,10 +24,22 @@ class ArtisanAuth extends Config
 
     public function loginArtisan($email, $password)
     {
-        $query = "SELECT * FROM customer_tb WHERE email='$email'";
+        $query = "SELECT * FROM artisan_tb WHERE email='$email'";
         $result = mysqli_query($this->connection, $query);
         $foundUser = mysqli_fetch_assoc($result);
         // print_r($foundUser);
+
+        if(mysqli_num_rows($result) > 0) {
+                $verifiedUser = password_verify($password, $foundUser['password']);
+                // echo $verifiedUser;
+                if ($verifiedUser) {
+                    echo json_encode(['status' => 200, 'message' => 'Login successful']);
+                } else {
+                    echo json_encode(['status' => 400, 'message' => 'Email or password is incorrect']);
+                }
+            } else {
+                echo json_encode(['status' => 400, 'message' => 'account does not exist. Kindly sign up first']);
+            }
     }
 }
 
@@ -40,10 +52,10 @@ $email = $artisanDetails->email;
 $password = $artisanDetails->password;
 
 $auth = new ArtisanAuth;
-if ($first_name && $last_name) {
-        $auth->createArtisan($first_name, $last_name, $email, $password);
-    } else {
-        $auth->loginArtisan($email, $password);
-    }
+// if ($first_name && $last_name) {
+//     $auth->createArtisan($first_name, $last_name, $email, $password);
+// } else {
+//     $auth->loginArtisan($email, $password);
+// }
 // $auth->createArtisan('Femi', 'John', 'fm222@gmail.com', '123456');
-$auth->loginArtisan('fm222@gmail.com', '123456');
+$auth->loginArtisan('roma2@mailinator.com', 'Femi1234$');
