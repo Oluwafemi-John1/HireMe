@@ -1,11 +1,15 @@
 <?php
 
 class Router {
+    private $routes = [];
     // Register routes
-    public function add() {}
+    public function add($method, $path, $callback) {
+        $this->routes[] = compact('method', 'path', 'callback');
+        print_r($this->routes);
+    }
 
     // Process all route requests from the frontend
     public function dispatch() {
-        
+
     }
 }
