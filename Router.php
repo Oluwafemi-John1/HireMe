@@ -5,7 +5,7 @@ class Router {
     // Register routes
     public function add($method, $path, $callback) {
         $this->routes[] = compact('method', 'path', 'callback');
-        print_r($this->routes);
+        // print_r($this->routes);
     }
 
     // Process all route requests from the frontend

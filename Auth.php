@@ -1,8 +1,8 @@
 <?php
 require('Config.php');
-class Auth extends Config
+class Auth extends Configuration
 {
-    public function createCustomer($first_name, $last_name, $email, $password)
+    public function createCustomer()
     {
         $input = file_get_contents('php://input');
         $customerDetails = json_decode($input);

@@ -11,6 +11,7 @@
 
     $method = $_SERVER['REQUEST_METHOD'];
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $path = str_replace('/HireMe', '', $path);
 
     $router->dispatch($method, $path);
 ?>
