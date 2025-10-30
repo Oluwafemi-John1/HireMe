@@ -10,6 +10,6 @@ class Router {
 
     // Process all route requests from the frontend
     public function dispatch() {
-
+        
     }
 }
