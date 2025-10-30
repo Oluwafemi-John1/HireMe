@@ -9,7 +9,11 @@ class Router {
     }
 
     // Process all route requests from the frontend
-    public function dispatch() {
-        
+    public function dispatch($method, $path) {
+        foreach ($this->routes as $route) {
+            if($method === $route['method'] && $path === $route['path']) {
+                return call_user_func($route['callback']);
+            }
+        }
     }
 }
