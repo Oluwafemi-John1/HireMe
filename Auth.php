@@ -59,7 +59,7 @@ class Auth extends Configuration
                 $updateQuery = "UPDATE `customer_tb` SET `token`='$token' WHERE customer_id='$customer_id'";
 
                 mysqli_query($this->connection, $updateQuery);
-                echo json_encode(['status' => 200, 'message' => 'Login successful']);
+                echo json_encode(['status' => 200, 'message' => 'Login successful', 'token' => $token]);
             } else {
                 echo json_encode(['status' => 400, 'message' => 'Email or password is incorrect']);
             }
