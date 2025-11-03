@@ -3,7 +3,7 @@ require('Config.php');
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-class Auth extends Configuration
+class Auth extends Configure
 {
     public function createCustomer()
     {

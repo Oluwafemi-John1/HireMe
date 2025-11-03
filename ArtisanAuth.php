@@ -1,6 +1,6 @@
 <?php
 require('Config.php');
-class ArtisanAuth extends Configuration
+class ArtisanAuth extends Configure
 {
     public function createArtisan($first_name, $last_name, $email, $password)
     {

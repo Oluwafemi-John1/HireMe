@@ -16,7 +16,7 @@ require('vendor/autoload.php');
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-class Configuration
+class Configure
 {
     //  DB name, host, username, paswword;
     protected $host = 'localhost';
