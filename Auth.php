@@ -1,5 +1,8 @@
 <?php
 require('Config.php');
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+require('vendor/autoload.php');
 class Auth extends Configuration
 {
     public function createCustomer()
@@ -40,6 +43,8 @@ class Auth extends Configuration
             $verifiedUser = password_verify($password, $foundUser['password']);
             // echo $verifiedUser;
             if ($verifiedUser) {
+                // Create JWT here
+                
                 echo json_encode(['status' => 200, 'message' => 'Login successful']);
             } else {
                 echo json_encode(['status' => 400, 'message' => 'Email or password is incorrect']);
