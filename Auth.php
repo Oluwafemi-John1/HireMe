@@ -2,7 +2,7 @@
 require('Config.php');
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-require('vendor/autoload.php');
+
 class Auth extends Configuration
 {
     public function createCustomer()
@@ -44,7 +44,16 @@ class Auth extends Configuration
             // echo $verifiedUser;
             if ($verifiedUser) {
                 // Create JWT here
+                $payload = [
+                    'user_id' => $foundUser['customer_id'],
+                    'email' => $foundUser['email'],
+                    'first_name' => $foundUser['first_name'],
+                    'role' => $foundUser['customer'],
+                    'iat' => time(),
+                    'role' => time() + 3600
+                ];
 
+                $token = JWT::encode($payload, $_ENV['SECRET_KEY'], 'HS256');
                 echo json_encode(['status' => 200, 'message' => 'Login successful']);
             } else {
                 echo json_encode(['status' => 400, 'message' => 'Email or password is incorrect']);
@@ -72,5 +81,5 @@ class Auth extends Configuration
 // $auth->createCustomer('Femi', 'John', 'fm@gmail.com', '123456')
 // $auth->loginCustomer('roma@mailinator.com', 'Femi1234$')
 
-$secretKey = bin2hex(random_bytes(32));
-echo $secretKey;
+// $secretKey = bin2hex(random_bytes(32));
+// echo $secretKey;
