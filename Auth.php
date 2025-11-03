@@ -44,7 +44,7 @@ class Auth extends Configuration
             // echo $verifiedUser;
             if ($verifiedUser) {
                 // Create JWT here
-                
+
                 echo json_encode(['status' => 200, 'message' => 'Login successful']);
             } else {
                 echo json_encode(['status' => 400, 'message' => 'Email or password is incorrect']);
@@ -71,3 +71,6 @@ class Auth extends Configuration
 // }
 // $auth->createCustomer('Femi', 'John', 'fm@gmail.com', '123456')
 // $auth->loginCustomer('roma@mailinator.com', 'Femi1234$')
+
+$secretKey = bin2hex(random_bytes(32));
+echo $secretKey;
