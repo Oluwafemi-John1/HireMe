@@ -54,6 +54,11 @@ class Auth extends Configuration
                 ];
 
                 $token = JWT::encode($payload, $_ENV['SECRET_KEY'], 'HS256');
+                // store token into the database
+                $customer_id = $foundUser['customer_id'];
+                $updateQuery = "UPDATE `customer_tb` SET `token`='$token' WHERE customer_id='$customer_id'";
+
+                mysqli_query($this->connection, $updateQuery);
                 echo json_encode(['status' => 200, 'message' => 'Login successful']);
             } else {
                 echo json_encode(['status' => 400, 'message' => 'Email or password is incorrect']);
