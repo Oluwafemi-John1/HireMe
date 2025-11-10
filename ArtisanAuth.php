@@ -1,12 +1,18 @@
 <?php
-require('Config.php');
+require_once('Config.php');
 class ArtisanAuth extends Configure
 {
-    public function createArtisan($first_name, $last_name, $email, $password)
+    public function createArtisan()
     {
+        $input = file_get_contents('php://input');
+        $artisanDetails = json_decode($input);
+        $first_name = $artisanDetails->first_name;
+        $last_name = $artisanDetails->last_name;
+        $email = $artisanDetails->email;
+        $password = $artisanDetails->password;
         // Hash password
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $confirmQuery = "SELECT * FROM customer_tb WHERE email='$email'";
+        $confirmQuery = "SELECT * FROM artisan_tb WHERE email='$email'";
         $result = mysqli_query($this->connection, $confirmQuery);
 
         if (mysqli_num_rows($result) > 0) {
@@ -22,8 +28,12 @@ class ArtisanAuth extends Configure
         }
     }
 
-    public function loginArtisan($email, $password)
+    public function loginArtisan()
     {
+        $input = file_get_contents('php://input');
+        $artisanDetails = json_decode($input);
+        $email = $artisanDetails->email;
+        $password = $artisanDetails->password;
         $query = "SELECT * FROM artisan_tb WHERE email='$email'";
         $result = mysqli_query($this->connection, $query);
         $foundUser = mysqli_fetch_assoc($result);
@@ -44,18 +54,18 @@ class ArtisanAuth extends Configure
 }
 
 // Receive from frontend
-$input = file_get_contents('php://input');
-$artisanDetails = json_decode($input); // Converts the details into what PHP understands
-$first_name = $artisanDetails->first_name;
-$last_name = $artisanDetails->last_name;
-$email = $artisanDetails->email;
-$password = $artisanDetails->password;
+// $input = file_get_contents('php://input');
+// $artisanDetails = json_decode($input); // Converts the details into what PHP understands
+// $first_name = $artisanDetails->first_name;
+// $last_name = $artisanDetails->last_name;
+// $email = $artisanDetails->email;
+// $password = $artisanDetails->password;
 
-$auth = new ArtisanAuth;
-if ($first_name && $last_name) {
-    $auth->createArtisan($first_name, $last_name, $email, $password);
-} else {
-    $auth->loginArtisan($email, $password);
-}
+// $auth = new ArtisanAuth;
+// if ($first_name && $last_name) {
+//     $auth->createArtisan($first_name, $last_name, $email, $password);
+// } else {
+//     $auth->loginArtisan($email, $password);
+// }
 // $auth->createArtisan('Femi', 'John', 'fm222@gmail.com', '123456');
 // $auth->loginArtisan('roma2@mailinator.com', 'Femi1234$');

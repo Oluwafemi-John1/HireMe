@@ -14,8 +14,7 @@ class Router {
             if($method === $route['method'] && $path === $route['path']) {
                 return call_user_func($route['callback']);
             }
-
-            echo json_encode(['status' => 400, 'message' => 'Route not found']);
         }
+        echo json_encode(['status' => 400, 'message' => 'Route not found']);
     }
 }

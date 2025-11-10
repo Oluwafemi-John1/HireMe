@@ -1,5 +1,6 @@
 <?php
-require('Config.php');
+require_once('Config.php');
+
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
@@ -32,9 +33,14 @@ class Auth extends Configure
         }
     }
 
-    public function loginCustomer($email, $password)
+    public function loginCustomer()
     {
+        $input = file_get_contents('php://input');
+        $customerDetails = json_decode($input);
+        $email = $customerDetails->email;
+        $password = $customerDetails->password;
         $query = "SELECT * FROM customer_tb WHERE email='$email'";
+
         $result = mysqli_query($this->connection, $query);
         $foundUser = mysqli_fetch_assoc($result);
         // print_r($foundUser);

@@ -5,9 +5,12 @@
 
     $router = new Router;
     $auth = new Auth;
+    $artisanAuth = new ArtisanAuth;
 
     $router->add('POST', '/auth/signup', [$auth, 'createCustomer']);
     $router->add('POST', '/auth/login', [$auth, 'loginCustomer']);
+    $router->add('POST', '/auth/artisansignup', [$artisanAuth, 'createArtisan']);
+    $router->add('POST', '/auth/artisanlogin', [$artisanAuth, 'loginArtisan']);
 
     $method = $_SERVER['REQUEST_METHOD'];
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
