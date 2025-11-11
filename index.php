@@ -9,6 +9,7 @@
 
     $router->add('POST', '/auth/signup', [$auth, 'createCustomer']);
     $router->add('POST', '/auth/login', [$auth, 'loginCustomer']);
+    $router->add('POST', '/auth/logout', [$auth, 'logoutCustomer']);
     $router->add('POST', '/auth/artisansignup', [$artisanAuth, 'createArtisan']);
     $router->add('POST', '/auth/artisanlogin', [$artisanAuth, 'loginArtisan']);
 

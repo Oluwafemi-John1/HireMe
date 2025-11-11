@@ -54,24 +54,36 @@ class Auth extends Configure
                     'user_id' => $foundUser['customer_id'],
                     'email' => $foundUser['email'],
                     'first_name' => $foundUser['first_name'],
-                    'role' => $foundUser['customer'],
+                    'role' => 'customer',
                     'iat' => time(),
-                    'role' => time() + 3600
+                    'exp' => time() + 3600
                 ];
 
                 $token = JWT::encode($payload, $_ENV['SECRET_KEY'], 'HS256');
                 // store token into the database
                 $customer_id = $foundUser['customer_id'];
-                $updateQuery = "UPDATE `customer_tb` SET `token`='$token' WHERE customer_id='$customer_id'";
+                $updateQuery = "UPDATE `customer_tb` SET `token`='$token' WHERE `customer_id`='$customer_id'";
 
-                mysqli_query($this->connection, $updateQuery);
-                echo json_encode(['status' => 200, 'message' => 'Login successful', 'token' => $token]);
+                $savedCustomer = mysqli_query($this->connection, $updateQuery);
+                if ($savedCustomer) {
+                    echo json_encode(['status' => 200, 'message' => 'Login successful', 'token' => $token]);
+                }
             } else {
                 echo json_encode(['status' => 400, 'message' => 'Email or password is incorrect']);
             }
         } else {
             echo json_encode(['status' => 400, 'message' => 'account does not exist. Kindly sign up first']);
         }
+    }
+
+    public function logoutCustomer()
+    {
+        $input = file_get_contents('php://input');
+        $details = json_decode($input);
+        $customer_id = $details->customer_id;
+
+        $updateQuery = "UPDATE `customer_tb` SET `token`='' WHERE `customer_id`='$customer_id'";
+        mysqli_query($this->connection, $updateQuery);
     }
 }
 
